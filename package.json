@@ -1,0 +1,29 @@
+{
+  "name": "jest-typescript-seed",
+  "version": "1.0.0",
+  "description": "> If you want to write jest unit tests in typescript without using any of the popular webframeworks like angular or react, then use this project as a seed.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/frfis/jest-typescript-seed.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/frfis/jest-typescript-seed/issues"
+  },
+  "homepage": "https://gitlab.com/frfis/jest-typescript-seed#README",
+  "devDependencies": {
+    "jest": "^22.0.6",
+    "jest-preset-typescript": "^1.0.1",
+    "ts-jest": "^22.0.1",
+    "ts-node": "^4.1.0",
+    "typescript": "^2.6.2",
+    "@types/jest": "^22.0.1"
+  },
+  "dependencies": {
+  }
+}
