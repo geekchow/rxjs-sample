@@ -4,7 +4,7 @@
   "description": "> If you want to write jest unit tests in typescript without using any of the popular webframeworks like angular or react, then use this project as a seed.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/jest"
   },
   "repository": {
     "type": "git",
