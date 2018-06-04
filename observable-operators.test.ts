@@ -2,9 +2,10 @@ import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
 import { cold , hot } from 'jasmine-marbles'
 import { from } from 'rxjs/Observable/from';
-import { map, filter, defaultIfEmpty, take, switchMap, combineLatest, pairwise, tap } from 'rxjs/operators';
+import { map, filter, defaultIfEmpty, take, switchMap, combineLatest, pairwise, tap, catchError } from 'rxjs/operators';
 import { fromPromise } from 'rxjs/Observable/fromPromise';
 import { forkJoin } from 'rxjs/Observable/forkJoin';
+import { of } from 'rxjs/Observable/of';
 import 'jasmine-marbles';
 import { subscribeToObservable } from './test-utils';
 
@@ -97,5 +98,16 @@ describe('observable operators', () => {
     // expect(newOne).toBeObservable(origin);
     expect(tapFn).toHaveBeenCalledTimes(3);
     expect(tapFn).toHaveBeenLastCalledWith(30);
+  })
+
+  it('catchError', () => {
+    const msg = { error: 'You got an error'}
+    const origin = cold('-#', null, msg);
+    const tapFn = jest.fn();
+    const newOne = origin.pipe(
+      tap(() => tapFn()),
+      catchError((e) => of(e))
+    );
+    expect(newOne).toBeObservable(cold('-(a|)', { a: msg }));
   })
 })
