@@ -2,10 +2,11 @@ import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
 import { cold , hot } from 'jasmine-marbles'
 import { from } from 'rxjs/Observable/from';
-import { map, filter, defaultIfEmpty, take, switchMap, combineLatest, pairwise } from 'rxjs/operators';
+import { map, filter, defaultIfEmpty, take, switchMap, combineLatest, pairwise, tap } from 'rxjs/operators';
 import { fromPromise } from 'rxjs/Observable/fromPromise';
 import { forkJoin } from 'rxjs/Observable/forkJoin';
 import 'jasmine-marbles';
+import { subscribeToObservable } from './test-utils';
 
 describe('observable operators', () => {
   it('map', () => {
@@ -83,5 +84,18 @@ describe('observable operators', () => {
     const origin = cold('-a-b-c|', { a: 'a', b: 'b', c: 'c'});
     const newOne = origin.pipe(pairwise(), map(([e1, e2]) => e1 + e2));
     expect(newOne).toBeObservable(cold('---a-b|', { a: 'ab', b: 'bc'}));
+  })
+
+  it('tap', () => {
+    const origin = cold('a-bc|', { a: 10, b: 20, c: 30});
+    // const tapFn = (e: any) => console.log('tapFn: ', e);
+    const tapFn = jest.fn();
+    const newOne = origin.pipe(
+      tap((e) => tapFn(e))
+    );
+    subscribeToObservable(newOne);
+    // expect(newOne).toBeObservable(origin);
+    expect(tapFn).toHaveBeenCalledTimes(3);
+    expect(tapFn).toHaveBeenLastCalledWith(30);
   })
 })
